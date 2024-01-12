@@ -1,6 +1,6 @@
 import pilots from '../pilots.json';
-import { PageTitle } from './PageTitle';
-import { PilotList } from './PilotList';
+import { PageTitle } from './PageTitle/PageTitle';
+import { PilotList } from './PilotList/PilotList';
 
 export const App = () => {
   return (

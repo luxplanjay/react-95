@@ -1,0 +1,22 @@
+.container {
+  border: 1px solid #212121;
+}
+
+.title {
+  background-color: green;
+}
+
+.status {
+  background-color: cyan;
+  color: blue;
+}
+
+.isActive {
+  composes: status;
+  color: green;
+}
+
+.isRetired {
+  composes: status;
+  color: red;
+}

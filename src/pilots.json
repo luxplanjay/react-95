@@ -22,5 +22,13 @@
     "age": 39,
     "active": true,
     "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0Vmtqupl5WKIsVe83rJSzJmWfIn-sdOq9P8Rk8iY7ymK6ZhgRrNv85sgYAjwHUsCiik0&usqp=CAU"
+  },
+  {
+    "id": "4",
+    "name": "Mary Akleinson",
+    "email": "m.akleinson@mail.com",
+    "age": 24,
+    "active": false,
+    "avatar": null
   }
 ]
