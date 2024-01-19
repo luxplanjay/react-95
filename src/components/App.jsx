@@ -1,43 +1,49 @@
-// import { useState } from 'react';
-// import { Clicker } from './Clicker';
 import { Reader } from './Reader';
 import articles from '../articles.json';
+import { useState, useEffect } from 'react';
 
-export const App = () => {
-  return (
-    <div>
-      <Reader items={articles} />
-    </div>
-  );
+// App mounts > App unmounts > App mounts
+
+const getInitialClicks = () => {
+  const savedClicks = window.localStorage.getItem('number-of-clicks');
+  if (savedClicks !== null) {
+    return JSON.parse(savedClicks);
+  }
+  return 0;
 };
 
-// export const App = () => {
-//   const [count, setCount] = useState(0);
+export const App = () => {
+  const [clicks, setClicks] = useState(getInitialClicks);
+  const [date, setDate] = useState(Date.now());
 
-//   const [user, setUser] = useState({
-//     username: 'Mango',
-//     age: 2,
-//     isOnline: true,
-//   });
+  useEffect(() => {
+    console.log('code inside useEffect', clicks);
+    window.localStorage.setItem('number-of-clicks', clicks);
+  }, [clicks]);
 
-//   const changeUser = () => {
-//     setUser({
-//       ...user,
-//       age: 3,
-//     });
-//   };
+  useEffect(() => {
+    console.log('Log wheh date state changes', date);
+  }, [date]);
 
-//   const handleClick = () => {
-//     setCount(count + 1);
-//   };
+  useEffect(() => {
+    console.log('Effect on mount');
+    const id = setInterval(() => {
+      console.log(Date.now());
+    }, 2000);
 
-//   return (
-//     <div>
-//       <p>Total clicks: {count}</p>
-//       <Clicker value={count} onUpdate={handleClick} initialValue={0} />
-//       <Clicker value={count} onUpdate={handleClick} initialValue={5} />
+    return () => {
+      console.log('effect cleanup');
+      clearInterval(id);
+    };
+  }, []);
 
-//       <button onClick={changeUser}>Change user</button>
-//     </div>
-//   );
-// };
+  return (
+    <>
+      <button onClick={() => setClicks(clicks + 1)}>Clicks: {clicks}</button>
+      <button onClick={() => setDate(Date.now())}>Date: {date}</button>
+
+      <hr />
+      <Reader items={articles} />
+    </>
+  );
+};
