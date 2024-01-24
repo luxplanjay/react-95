@@ -1,49 +1,47 @@
-import { Reader } from './Reader';
-import articles from '../articles.json';
-import { useState, useEffect } from 'react';
-
-// App mounts > App unmounts > App mounts
-
-const getInitialClicks = () => {
-  const savedClicks = window.localStorage.getItem('number-of-clicks');
-  if (savedClicks !== null) {
-    return JSON.parse(savedClicks);
-  }
-  return 0;
-};
+import { useState } from 'react';
+import { Filter } from './Filter';
+import { Users } from './Users';
+import { UserForm } from './UserForm';
+// import { PaymentForm } from './PaymentForm';
 
 export const App = () => {
-  const [clicks, setClicks] = useState(getInitialClicks);
-  const [date, setDate] = useState(Date.now());
+  const [nameFilter, setNameFilter] = useState('');
+  const [users, setUsers] = useState([
+    { username: 'Jacob', id: 11124 },
+    { username: 'Mango', id: 89278 },
+    { username: 'Elena', id: 78817 },
+    { username: 'Orlando', id: 87667 },
+    { username: 'Gimli', id: 45776 },
+  ]);
 
-  useEffect(() => {
-    console.log('code inside useEffect', clicks);
-    window.localStorage.setItem('number-of-clicks', clicks);
-  }, [clicks]);
+  const addUser = newUser => {
+    setUsers(prevUsers => {
+      return [
+        ...prevUsers,
+        {
+          username: newUser,
+          id: Date.now(),
+        },
+      ];
+    });
+  };
 
-  useEffect(() => {
-    console.log('Log wheh date state changes', date);
-  }, [date]);
+  const deleteUser = userId => {
+    setUsers(prevUsers => {
+      return prevUsers.filter(user => user.id !== userId);
+    });
+  };
 
-  useEffect(() => {
-    console.log('Effect on mount');
-    const id = setInterval(() => {
-      console.log(Date.now());
-    }, 2000);
-
-    return () => {
-      console.log('effect cleanup');
-      clearInterval(id);
-    };
-  }, []);
+  const visibleUsers = users.filter(user =>
+    user.username.toLowerCase().includes(nameFilter.toLowerCase())
+  );
 
   return (
     <>
-      <button onClick={() => setClicks(clicks + 1)}>Clicks: {clicks}</button>
-      <button onClick={() => setDate(Date.now())}>Date: {date}</button>
-
+      <UserForm onAdd={addUser} />
       <hr />
-      <Reader items={articles} />
+      <Filter value={nameFilter} onChange={setNameFilter} />
+      <Users items={visibleUsers} onDelete={deleteUser} />
     </>
   );
 };
