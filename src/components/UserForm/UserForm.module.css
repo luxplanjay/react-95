@@ -18,3 +18,8 @@
 .formGroup select {
   padding: 4px;
 }
+
+.error {
+  font-size: 12px;
+  color: orangered;
+}
