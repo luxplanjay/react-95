@@ -9,6 +9,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  margin: 8px;
+}
+
 input,
 select,
 button {

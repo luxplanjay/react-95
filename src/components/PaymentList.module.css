@@ -1,0 +1,18 @@
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.item {
+  border: 1px solid black;
+  padding: 4px;
+  width: 300px;
+}
+
+.item p {
+  margin: 0;
+}

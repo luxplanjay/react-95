@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link, Outlet } from 'react-router-dom';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { getPaymentById } from '../api';
 import { PageTitle } from '../components/PageTitle';
+import { BackLink } from '../components/BackLink';
 
 export default function PaymentDetailsPage() {
+  const location = useLocation();
+  const backLinkRef = useRef(location.state);
+
   const { paymentId } = useParams();
   const [payment, setPayment] = useState(null);
 
@@ -19,7 +23,10 @@ export default function PaymentDetailsPage() {
 
   return (
     <div>
-      <PageTitle>PaymentDetailsPage</PageTitle>
+      <PageTitle>Payment details</PageTitle>
+      <BackLink href={backLinkRef.current ?? '/payments'}>
+        Back to all payments
+      </BackLink>
       {payment && (
         <div>
           <div>
@@ -30,25 +37,17 @@ export default function PaymentDetailsPage() {
               {payment.isPaid ? 'Paid' : 'Pending'} {payment.amount}$
             </p>
           </div>
-          <div>
+
+          <div style={{ display: 'flex', gap: 8 }}>
             <Link to="subpage-a">Subpage A</Link>
             <Link to="subpage-b">Subpage B</Link>
           </div>
 
-          <Outlet />
+          <Suspense fallback={<b>Loading subpage...</b>}>
+            <Outlet />
+          </Suspense>
         </div>
       )}
     </div>
   );
 }
-
-// {
-//     "id": "1",
-//     "cardNumber": "1234 5678 9012 3456",
-//     "cardType": "Visa",
-//     "cardOwner": "John Doe",
-//     "date": "2024-01-01",
-//     "amount": 100,
-//     "description": "Payment for groceries",
-//     "isPaid": true
-// }
