@@ -1,36 +1,70 @@
-const balanceInitialState = {
-  value: 50,
+import { createSlice } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const balanceSlice = createSlice({
+  name: 'balance',
+  initialState: {
+    value: 50,
+    a: 1,
+    b: 2,
+  },
+  reducers: {
+    deposit: (state, action) => {
+      state.value += action.payload;
+    },
+    withdraw: (state, action) => {
+      state.value -= action.payload;
+    },
+  },
+});
+
+export const { deposit, withdraw } = balanceSlice.actions;
+
+const persistConfig = {
+  key: 'balance',
+  storage,
+  whitelist: ['value'],
 };
 
-export const balanceReducer = (state = balanceInitialState, action) => {
-  switch (action.type) {
-    case 'balance/deposit':
-      return {
-        ...state,
-        value: state.value + action.payload,
-      };
+export const balanceReducer = persistReducer(
+  persistConfig,
+  balanceSlice.reducer
+);
 
-    case 'balance/withdraw':
-      return {
-        ...state,
-        value: state.value - action.payload,
-      };
+// export const deposit = createAction('balance/deposit');
 
-    default:
-      return state;
-  }
-};
+// export const withdraw = createAction('balance/withdraw');
 
-export const deposit = value => {
-  return {
-    type: 'balance/deposit',
-    payload: value,
-  };
-};
+// const initialState = {
+//   value: 50,
+// };
 
-export const withdraw = value => {
-  return {
-    type: 'balance/withdraw',
-    payload: value,
-  };
-};
+// export const balanceReducer = createReducer(initialState, builder =>
+//   builder
+//     .addCase(deposit, (state, action) => {
+//       state.value += action.payload;
+//     })
+//     .addCase(withdraw, (state, action) => {
+//       state.value -= action.payload;
+//     })
+// );
+
+// export const balanceReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case 'balance/deposit':
+//       return {
+//         ...state,
+//         value: state.value + action.payload,
+//       };
+
+//     case 'balance/withdraw':
+//       return {
+//         ...state,
+//         value: state.value - action.payload,
+//       };
+
+//     default:
+//       return state;
+//   }
+// };

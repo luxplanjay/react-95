@@ -1,17 +1,13 @@
 # План заняття
 
-- Управління станом
-  - Глобальний стан
-  - Потік даних
-- Встановлення Redux та React Redux
-- Стор (store)
-  - Redux DevTools
-- Підписка на стор
-  - Функції-селектори
-- Екшени (actions)
-  - Генератори екшенів
-  - Відправлення екшенів
-- Редюсери (reducers)
-  - Кореневий редюсер
-  - Обробка екшенів
-  - Композиція редюсерів
+- Redux Toolkit
+- Встановлення `@reduxjs/toolkit`
+- Функція `configureStore`
+- Функція `createAction`
+  - Тип екшену
+  - Вміст payload з `createAction(type, prepareAction)`
+- createReducer
+  - Бібліотека Immer
+- createSlice
+  - Вміст payload
+- Redux Persist
