@@ -1,20 +1,31 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deposit, withdraw } from '../redux/balanceSlice';
-import LangSwitcher from './LangSwitcher';
+import { deleteTask, fetchTasks } from '../redux/operations';
 
 export default function App() {
   const dispatch = useDispatch();
-  const balance = useSelector(state => state.balance.value);
-  const lang = useSelector(state => state.locale.lang);
+  const { items, loading, error } = useSelector(state => state.tasks);
+
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
   return (
     <div>
-      <LangSwitcher />
-      <p>Current lang: {lang}</p>
-      <hr />
-      <p>Balance: {balance} credits</p>
-      <button onClick={() => dispatch(deposit(10))}>Deposit 10 credits</button>
-      <button onClick={() => dispatch(withdraw(5))}>Withdraw 5 credits</button>
+      {loading && <p>LOADING...</p>}
+      {error && <p>ERROR!!!!!</p>}
+      {items.length > 0 && (
+        <ul>
+          {items.map(item => (
+            <li key={item.id}>
+              <p>{item.text}</p>
+              <button onClick={() => dispatch(deleteTask(item.id))}>
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

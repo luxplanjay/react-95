@@ -1,13 +1,14 @@
 # План заняття
 
-- Redux Toolkit
-- Встановлення `@reduxjs/toolkit`
-- Функція `configureStore`
-- Функція `createAction`
-  - Тип екшену
-  - Вміст payload з `createAction(type, prepareAction)`
-- createReducer
-  - Бібліотека Immer
-- createSlice
-  - Вміст payload
-- Redux Persist
+- Асинхронні операції
+  - Форма стану слайса: `loading`, `error`, `data`
+  - Екшени слайса: `pending`, `success`, `error`
+- Оголошення операції `fetchTasks`
+  - URL запиту: https://62584f320c918296a49543e7.mockapi.io/tasks
+  - Діспатч синхронних екшенів `pending`, `success`, `error`
+  - Виклик операції у компоненті
+- Оголошення операції через `createAsyncThunk`
+  - Діспатч операції у компоненті
+  - Огляд як це працює
+  - Обробка результату операції у слайсі (`extraReducers`)
+  - Обробка запиту, що завершився з помилкою (`thunkAPI.rejectWithValue`)
