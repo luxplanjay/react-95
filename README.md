@@ -1,14 +1,11 @@
 # План заняття
 
-- Асинхронні операції
-  - Форма стану слайса: `loading`, `error`, `data`
-  - Екшени слайса: `pending`, `success`, `error`
-- Оголошення операції `fetchTasks`
-  - URL запиту: https://62584f320c918296a49543e7.mockapi.io/tasks
-  - Діспатч синхронних екшенів `pending`, `success`, `error`
-  - Виклик операції у компоненті
-- Оголошення операції через `createAsyncThunk`
-  - Діспатч операції у компоненті
-  - Огляд як це працює
-  - Обробка результату операції у слайсі (`extraReducers`)
-  - Обробка запиту, що завершився з помилкою (`thunkAPI.rejectWithValue`)
+Початковий код для форку на занятті:
+https://stackblitz.com/edit/vitejs-vite-9xndor?ctl=1&embed=1&file=src/components/App.jsx&view=editor
+
+- Селектори
+- Найменування `select*`
+- Складові селектори
+  - Список завдань у `TaskList`
+  - Лічильник завдань у `TaskCounter`
+- Оптимізація з `createSelector`
